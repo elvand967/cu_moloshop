@@ -3,6 +3,8 @@
 
 import uuid
 from django.db import models
+from ckeditor.fields import RichTextField   # форматироваание текста
+# from ckeditor_uploader.fields import RichTextUploadingField    # форматироваание текста с поддержкой изображений
 
 '''
 Реализация UUID в качестве id для моделей.
@@ -56,6 +58,8 @@ class ServicePolicy(UUIDModel):
         verbose_name='SEO описание'
     )
     content = models.TextField(verbose_name="Содержание")
+    description = RichTextField()   # форматируемый текст
+    # description = RichTextUploadingField()  # форматируемый текст с поддержкой изображений
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата последнего обновления")
 
     class Meta:

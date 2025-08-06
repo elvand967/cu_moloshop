@@ -61,6 +61,10 @@ INSTALLED_APPS = [
     # API
     'rest_framework',
     'rest_framework.authtoken',
+    # CKEditor - форматирование документов
+    'ckeditor',
+    'ckeditor_uploader',  # поддержка загрузки изображений
+
 ]
 
 
@@ -142,6 +146,19 @@ STATIC_ROOT = BASE_DIR / 'static_root'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# форматирование с загрузкой изображения (WYSIWYG-редактор)
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+
+# (необязательно, для настройки toolbar)
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 'auto',
+    },
+}
+
 
 # Авторизация
 AUTH_USER_MODEL = 'users.User'  # если кастомная модель

@@ -16,6 +16,7 @@ Including another URLconf
 """
 # moloshop/config/urls.py
 
+
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
@@ -28,6 +29,7 @@ urlpatterns = [
     path('api/users/', include('apps.users.urls_api', namespace='users_api')),
     path('accounts/', include('allauth.urls')),  # Это подключит все маршруты allauth, включая соцсети
     path('userpanel/', include('apps.userpanel.urls', namespace='userpanel')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 
