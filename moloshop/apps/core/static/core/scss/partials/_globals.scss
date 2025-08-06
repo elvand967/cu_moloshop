@@ -1,0 +1,179 @@
+
+// --- Reset / Normalize базовых стилей для всех браузеров ---
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  font-size: 100%;
+  font: inherit;
+  box-sizing: border-box; // еще раз для надежности
+}
+
+// Базовая типографика и фон
+
+html, body {
+  height: 100%;
+  font-family: 'Roboto', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(90deg, $color-bg-main 0%, #DCEEFF 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: $color-text-main;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Улучшение ссылок
+
+a {
+  color: $color-text-link;
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+    color: darken($color-text-link, 10%);
+  }
+}
+
+// Списки без маркеров и отступов
+
+ul, ol {
+  list-style: none;
+}
+
+// Таблицы
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+// Формы — убираем стандартный outline, задаём фокус
+
+input, textarea, select, button {
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.5rem;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: $color-bg-btn-main;
+    box-shadow: 0 0 0 3px rgba($color-bg-btn-main, 0.3);
+  }
+}
+
+// Встроенные блоки, inline и др
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+// --- Твои стили ---
+// Заголовки
+h1, h2, h3, h4, h5, h6 {
+  font-family: inherit;
+  font-weight: 700;
+  line-height: 1.2;
+  // color: $color-text-main;
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  font-size: 2.25rem; // ~38px
+}
+
+h2 {
+  font-size: 2rem; // ~32px
+}
+
+h3 {
+  font-size: 1.75rem; // ~28px
+}
+
+h4 {
+  font-size: 1.5rem; // ~24px
+}
+
+h5 {
+  font-size: 1.25rem; // ~20px
+}
+
+h6 {
+  font-size: 1rem; // ~16px
+  font-weight: 600;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+}
+
+.btn-outline {
+  border: 1px solid $color-bg-nav;
+  color: $color-text-link;
+  background-color: transparent;
+  transition: background-color 0.2s;
+}
+
+.btn-outline:hover {
+  background-color: $color-bg-nav;
+  color: white;
+}
+
+.highlight-box {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.list-clean {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.video-container {
+  padding-top: 56.25%;
+  position: relative;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}

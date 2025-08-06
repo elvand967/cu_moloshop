@@ -1,0 +1,19 @@
+{# moloshop/apps/core/templates/core/board.html #}
+
+{% extends "core/base.html" %}
+{% load static %}
+
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block header %}
+  {% include "core/includes/core_header.html" %}
+{% endblock %}
+
+
+{% block content %}
+    <h2>{{ title }}</h2>
+    <p>{{ info }}</p>
+{% endblock content %}

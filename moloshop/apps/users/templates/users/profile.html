@@ -1,0 +1,14 @@
+
+{# moloshop/apps/users/templates/users/profile.html #}
+
+{% extends "core/base.html" %}
+
+{% block header %}
+  {% include "users/includes/users-header.html" %}
+{% endblock %}
+
+{% block content %}
+<h1>Профиль</h1>
+<p>E-mail: {{ user.email }}</p>
+<p>Никнейм: {{ user.nickname }}</p>
+{% endblock %}

@@ -1,0 +1,18 @@
+// moloshop/apps/core/static/core/scss/global_core.scss
+// global_core.scss — основной SCSS-файл для сборки глобальных стилей проекта
+
+// Переменные и настройки
+@import 'partials/variables';
+@import 'partials/mixins';
+
+// Глобальные стили
+@import 'partials/globals';
+
+// Сетка
+@import 'partials/grid';
+
+// Утилиты (миксины, функции)
+@import 'partials/utilities';
+
+// Главное горизонтальное меню
+@import 'partials/main_menu';

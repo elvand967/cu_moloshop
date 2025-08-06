@@ -1,0 +1,241 @@
+// ===============================
+// Главное меню (navbar)
+// ===============================
+
+.navbar {
+  background-color: $color-bg-nav;
+  padding: 1rem 0.5rem;
+  position: relative;
+  z-index: 50;
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .menu-list {
+    display: flex;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .menu-item {
+      position: relative;
+
+      .menu-link-wrap {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .menu-link {
+        color: $color-text-header;
+        font-size: 1.1rem;
+        font-weight: 500;
+        text-decoration: none;
+        padding: 0.4rem 0.75rem;
+        border-radius: 0.4rem;
+        display: block;
+        transition: all 0.2s ease;
+
+        &:hover,
+        &:focus {
+          background-color: $color-bg-btn-main;
+          color: $color-text-header;
+          box-shadow: 0 2px 8px $color-shadow-hover;
+        }
+      }
+
+      .dropdown-toggle {
+        background: none;
+        border: none;
+        outline: none;
+        margin-left: 0.2rem;
+        width: 1.5em;
+        height: 1.5em;
+        cursor: pointer;
+        padding: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        &::before {
+          content: "";
+          display: block;
+          width: 0.8em;
+          height: 0.8em;
+          border: solid $color-text-header;
+          border-width: 0 0.18em 0.18em 0;
+          border-radius: 2px;
+          transform: rotate(45deg);
+          margin: auto;
+          transition: transform 0.25s;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          translate: -50% -55%;
+        }
+      }
+
+      &.submenu-open > .menu-link-wrap > .dropdown-toggle::before {
+        transform: rotate(-135deg);
+      }
+
+      &.has-dropdown {
+        // Desktop: раскрытие по hover
+        &:hover > .dropdown-menu,
+        &:focus-within > .dropdown-menu {
+          display: block;
+        }
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 110%;
+        left: 0;
+        background-color: $color-bg-card;
+        border: 1px solid $border-light;
+        box-shadow: 0 4px 12px $color-shadow-card;
+        border-radius: 0.4rem;
+        min-width: 10rem;
+        padding: 0.5rem 0;
+        z-index: 20;
+
+        li {
+          .dropdown-link {
+            display: block;
+            padding: 0.4rem 1rem;
+            color: $color-text-accent;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background 0.2s ease;
+
+            &:hover {
+              background-color: $color-bg-btn-secondary;
+              color: $color-text-main;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .divider-item {
+    color: $color-text-header;
+    font-weight: bold;
+    user-select: none;
+  }
+
+  .navbar-toggle {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .menu-label {
+      color: $color-text-header;
+      font-size: 1rem;
+      font-weight: 500;
+      margin-right: 1rem;
+    }
+
+    .hamburger {
+      position: relative;
+      width: 2rem;
+      height: 1.5rem;
+      cursor: pointer;
+      display: inline-block;
+      z-index: 1010;
+
+      span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        margin-bottom: 5px;
+        background-color: $color-text-header;
+        border-radius: 2px;
+        transition: all 0.3s ease-in-out;
+      }
+    }
+  }
+
+
+  // ---- Медиазапросы -----
+
+// Гамбургер
+@media (max-width: 835px) {
+  .menu-list {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+    padding-top: 1rem;
+
+    .menu-item {
+      .menu-link {
+        padding: 0.5rem 1rem;
+        color: $color-text-main;
+        border-radius: 0;
+      }
+
+      .dropdown-menu {
+        display: block; // Всегда раскрыты
+        position: relative;
+        box-shadow: none;
+        background-color: $border-light;
+        border: none;
+        padding-left: 1rem;
+        left: 0;
+        top: auto;
+        min-width: auto;
+        border-radius: 0.5rem;
+
+        .dropdown-link {
+          color: $color-text-accent;
+
+          &:hover {
+            background-color: transparent;
+            font-weight: 500;
+            color: $color-text-main;
+          }
+        }
+      }
+    }
+  }
+
+  // Если гамбургер нажат — показываем menu-list
+  #menu-toggle:checked ~ .navbar-menu .menu-list {
+    display: flex;
+  }
+// }
+
+
+
+    .navbar-toggle {
+      display: flex;
+      margin-top: 0.5rem;
+    }
+
+    // Бургер-анимация
+    #menu-toggle:checked ~ .navbar-menu .menu-list {
+      display: flex;
+    }
+    #menu-toggle:checked ~ .navbar-toggle .hamburger span:nth-child(1) {
+      transform: rotate(45deg) translateY(8px);
+    }
+    #menu-toggle:checked ~ .navbar-toggle .hamburger span:nth-child(2) {
+      opacity: 0;
+    }
+    #menu-toggle:checked ~ .navbar-toggle .hamburger span:nth-child(3) {
+      transform: rotate(-45deg) translateY(-8px);
+    }
+    .navbar-menu {
+      width: 100%;
+    }
+  }
+}

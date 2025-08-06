@@ -1,0 +1,200 @@
+
+// moloshop/apps/users/static/users/scss/users.scss
+
+// Задействуем переменные и миксины используемые в блоках страницы, компонентах и т.д.
+// Переменные в конечном core.css будут заменены на их значения
+@import 'variables';
+@import 'mixins';
+
+.auth-container {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-bg-main;
+}
+
+.auth-card {
+  background: $color-bg-card;
+  box-shadow: 0 8px 32px 0 $color-shadow-card;
+  border-radius: 1.5em;
+  padding: 2.5em 2em 2em 2em;
+  min-width: 340px;
+  max-width: 400px;
+}
+
+.auth-title {
+  color: $color-text-main;
+  text-align: center;
+  margin-bottom: 1.2em;
+  font-weight: 700;
+}
+
+.form-group {
+  margin-bottom: 1.3em;
+  label {
+    display: block;
+    margin-bottom: .4em;
+    color: $color-text-accent;
+    font-weight: 500;
+  }
+  .form-input {
+    width: 100%;
+    padding: .6em 1em;
+    border-radius: .7em;
+    border: 1px solid $border-gray;
+    background: $color-bg-section;
+    color: $color-text-main;
+    font-size: 1em;
+    margin-bottom: .2em;
+    &:focus {
+      border: 1.5px solid $border-blue;
+      outline: none;
+      background: $color-bg-main;
+      box-shadow: 0 0 0 2px $color-shadow-hover;
+    }
+  }
+}
+
+.btn-main {
+  display: block;
+  width: 100%;
+  background: $color-bg-btn-main;
+  color: $color-text-header;
+  border: none;
+  outline: none;
+  border-radius: .6em;
+  font-weight: 700;
+  font-size: 1.1em;
+  padding: 0.9em 0.9em;
+  cursor: pointer;
+  margin-top: 1em;
+  box-shadow: 0 2px 8px $color-shadow-hover;
+  transition: background .2s, box-shadow .2s;
+  &:hover {
+    text-decoration: none;
+    background: $border-blue;
+    color: $color-text-main;
+    box-shadow: 0 4px 16px $color-shadow-modal;
+  }
+}
+
+.anon{
+    background: $color-text-main;
+    &:hover {
+    text-decoration: none;
+    background: $border-blue;
+    color: $color-text-main;
+    box-shadow: 0 4px 16px $color-shadow-modal;
+    }
+}
+
+.auth-links {
+  margin: 1.4em 0 .8em;
+  text-align: center;
+  color: $color-text-secondary;
+  a {
+    color: $color-text-accent;
+    font-weight: 600;
+    &:hover {
+      color: $color-bg-btn-main;
+      text-decoration: underline;
+    }
+  }
+}
+
+.auth-social {
+  margin-top: 1.2em;
+  .social-divider {
+    text-align: center;
+    color: $color-text-help;
+    margin-bottom: 0.7em;
+    font-size: 0.96em;
+  }
+  .btn-social {
+    display: block;
+    width: 100%;
+    border-radius: .5em;
+    font-weight: 600;
+    text-align: left;
+    margin-bottom: 0.4em;
+    color: $color-text-header;
+    padding: 0.85em;
+    text-decoration: none;
+    transition: box-shadow .2s, background .2s;
+    box-shadow: 0 1px 4px $color-shadow-card;
+
+    &.btn-google { background: #DB4437; }
+    &.btn-vk { background: #4C75A3; }
+    &.btn-github { background: #24292e; }
+    &.btn-yandex { background: #FFCC00; color: #1F4E79; }
+    &.btn-phone { background: $color-bg-btn-secondary; color: $color-text-main; }
+
+    &:hover {
+      box-shadow: 0 2px 12px $color-shadow-hover;
+      filter: brightness(1.07);
+    }
+  }
+}
+
+.messages {
+  padding: 0;
+  margin: 0 0 .8em 0;
+  list-style: none;
+  .message {
+    border-radius: .5em;
+    margin-bottom: .5em;
+    padding: .7em 1em;
+    color: $color-text-header;
+    background: $color-bg-ad;
+    &.success { background: $color-text-success; color: $color-bg-card; }
+    &.error { background: $color-text-accent-alt; }
+    &.info { background: $color-bg-btn-main; }
+    &.warning { color: #FFF; background: #FFB300; }
+  }
+}
+
+
+//---------------------
+// header
+//---------------------
+.user-header-gradient {
+  background: linear-gradient(90deg, #48b1f3 0%, #06beb6 100%);
+  box-shadow: 0 2px 16px 0 rgba(70, 160, 230, 0.10);
+  color: #fff;
+  letter-spacing: 0.02em;
+  border-radius: 0 0 20px 20px;
+  position: relative;
+}
+
+.user-header-title {
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 2.3rem;
+  letter-spacing: 0.09em;
+  margin-bottom: 0.3em;
+}
+
+.user-header-slogan {
+  font-size: 1.18rem;
+  font-weight: 400;
+  opacity: 0.94;
+  margin: 0;
+}
+
+.user-header-logo {
+  filter: drop-shadow(0 1px 6px rgba(0,0,0,0.11));
+  height: 54px;
+}
+
+.header-logo-link {
+  outline: none;
+  border: none;
+}
+
+
+.user-header-logo {
+  filter: drop-shadow(0 1px 6px rgba(0,0,0,0.11));
+  height: 180px; /* увеличьте на нужное вам значение, например 80px или 100px */
+}
+

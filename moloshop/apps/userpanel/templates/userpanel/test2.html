@@ -1,0 +1,22 @@
+{# moloshop/apps/userpanel/templates/userpanel/test2.html #}
+
+{% extends "userpanel/base_userpanel.html" %}
+{% load static %}
+
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+
+{% block header %}{% endblock %}
+
+
+{% block content %}
+<h1>{{ title }}</h1>
+        {% with ""|center:5 as repeat_range %}
+          {% for _ in repeat_range %}
+            <p>{{ info }}</p>
+          {% endfor %}
+        {% endwith %}
+{% endblock content %}

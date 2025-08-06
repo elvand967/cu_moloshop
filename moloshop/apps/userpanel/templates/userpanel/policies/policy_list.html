@@ -1,0 +1,17 @@
+{% extends "userpanel/base_userpanel.html" %}
+
+{% block content %}
+  <h2 class="mb-3">Служебная информация</h2>
+  <ul class="list-group">
+    {% for policy in policies %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'userpanel:policy_detail' policy.slug %}">
+          {{ policy.title }}
+        </a>
+        <small class="text-muted">{{ policy.updated_at|date:"d.m.Y" }}</small>
+      </li>
+    {% empty %}
+      <li class="list-group-item">Нет доступных документов.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

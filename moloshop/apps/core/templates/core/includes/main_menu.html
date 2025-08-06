@@ -1,0 +1,42 @@
+{# main_menu.html — Адаптивное меню moloshop/apps/core/templates/core/includes/main_menu.html #}
+
+{% load static %}
+
+
+  <div class="container">
+    <!-- Гамбургер и подпись -->
+    <input type="checkbox" id="menu-toggle" class="d-none">
+
+    <div class="navbar-toggle">
+      <span class="menu-label">Главное меню</span>
+      <label for="menu-toggle" class="hamburger" aria-label="Открыть меню">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+    </div>
+
+    <div id="navbar-menu" class="navbar-menu">
+      <ul class="menu-list">
+        {% for item in menu_items %}
+          <li class="menu-item{% if item.children %} has-dropdown{% endif %}">
+            <div class="menu-link-wrap">
+              <a href="{% url item.url_name %}" class="menu-link">{{ item.title }}</a>
+            </div>
+            {% if item.children %}
+              <ul class="dropdown-menu" aria-label="Подменю">
+                {% for child in item.children %}
+                  <li>
+                    <a href="{% url child.url_name %}" class="dropdown-link">{{ child.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </li>
+          {% if not forloop.last %}
+            <li class="divider-item align-self-center d-none-md-down" aria-hidden="true">|</li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>

@@ -1,0 +1,55 @@
+{# moloshop/apps/core/templates/core/base.html #}
+
+{% load static %}
+{% load core_tags %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Moloshop.by — каталог услуг и объявлений от исполнителей и компаний Беларуси. Найдите нужную услугу быстро и удобно!">
+  <meta property="og:title" content="Moloshop.by — Услуги и исполнители рядом">
+  <meta property="og:description"
+    content="Платформа поиска и заказа услуг. Категории, витрина, отзывы и истории успеха." />
+  <title>Moloshop.by — Найти услугу</title>
+  <link rel="icon" href="{% static 'core/img/logo.ico' %}" type="image/x-icon" />
+  <link type="text/css" href="{% static 'core/css/global_core.css' %}" rel="stylesheet" />
+  <link type="text/css" href="{% static 'core/css/core.css' %}" rel="stylesheet" />
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+  <nav class="navbar" role="navigation" aria-label="Главное меню">
+    {# Главное горизонтальное меню #}
+    {% core_tags_main_menu %}
+  </nav>
+
+  <header class="main-header">
+    {% block header %}{% endblock %}
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <section class="cta-block">
+    <div class="container">
+      <h3>Не нашли нужную услугу?</h3>
+      <p>Оставьте заявку — исполнители сами предложат варианты!</p>
+      <a href="/request/" class="btn">Оставить заявку</a>
+    </div>
+  </section>
+
+  <footer class="main-footer">
+    <div class="container">
+      &copy; 2025 Moloshop.by | Все права защищены
+    </div>
+  </footer>
+  <script src="{% static 'core/js/parallax_effect.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+
+</html>

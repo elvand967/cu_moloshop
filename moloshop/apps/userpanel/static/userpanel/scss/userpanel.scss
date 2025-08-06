@@ -1,0 +1,5 @@
+
+// moloshop/apps/userpanel/static/userpanel/scss/userpanel.scss
+
+@import "variables"; // т.к. `core/scss/partials` уже в include_paths
+@import "partials/usermenu";

@@ -1,0 +1,76 @@
+
+{# moloshop/apps/userpanel/templates/userpanel/base_userpanel.html #}
+
+{% load static %}
+{% load core_tags %}
+{% load profile_menu %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <meta name="description" content="{% block meta_description %}
+  Moloshop.by — каталог услуг и объявлений от исполнителей и компаний. Найдите нужную услугу быстро и удобно!
+  {% endblock %}">
+  <meta property="og:title" content="Moloshop.by — Услуги и исполнители рядом">
+  <meta property="og:description"
+    content="Платформа поиска и заказа услуг. Категории, витрина, отзывы и истории успеха." />
+
+  <link rel="icon" href="{% static 'core/img/logo.ico' %}" type="image/x-icon" />
+   <link type="text/css" href="{% static 'core/css/global_core.css' %}" rel="stylesheet" />
+  <link type="text/css" href="{% static 'userpanel/css/userpanel.css' %}" rel="stylesheet" />
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+  <nav class="navbar" role="navigation" aria-label="Главное меню">
+    {# Главное горизонтальное меню #}
+    {% core_tags_main_menu %}
+  </nav>
+
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+
+  <div class="container mt-4">
+    <div class="row align-items-start">
+
+    <nav class="col-3 col-md-12 m-8">
+      {% render_user_menu %}
+    </nav>
+
+
+      <main class="col-6 col-md-12 m-8">
+        <div style="background-color: #00B8D9; border: 1px solid #ccc; border-radius: 0.5rem;">
+          {# Формы Личного кабинета #}
+          {% block content %}{% endblock %}
+        </div>
+      </main>
+
+      <section class="col-3 col-md-12 m-8 text-center">
+        {# Рекламные блоки #}
+        {% with ""|center:3 as repeat_range %}
+          {% for _ in repeat_range %}
+            <div style="height: 200px; margin-bottom: 2rem; background-color: #00FF00; border: 1px solid #ccc; border-radius: 0.5rem;">
+              <h3>Рекламный блок</h3>
+            </div>
+          {% endfor %}
+        {% endwith %}
+      </section>
+
+    </div>
+  </div>
+
+  <footer class="main-footer">
+    <div class="container mt-4 text-center">
+      &copy; 2025 Moloshop.by | Все права защищены
+    </div>
+  </footer>
+
+  {% block extra_js %}{% endblock %}
+
+</body>
+</html>
