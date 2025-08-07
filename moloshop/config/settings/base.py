@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     # API
     'rest_framework',
     'rest_framework.authtoken',
-    # CKEditor - форматирование документов
+    # CKEditor - форматирование документов (WYSIWYG-редактор)
     'ckeditor',
     'ckeditor_uploader',  # поддержка загрузки изображений
 
@@ -150,15 +150,64 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # форматирование с загрузкой изображения (WYSIWYG-редактор)
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 
-# (необязательно, для настройки toolbar)
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'toolbar': [
+#             {'name': 'document', 'items': ['Source', '-', 'Preview', 'Print']},
+#             {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', '-', 'Undo', 'Redo']},
+#             {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'RemoveFormat']},
+#             {'name': 'paragraph', 'items': ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight']},
+#             {'name': 'insert', 'items': ['Image', 'Table', 'HorizontalRule']},
+#             {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+#             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+#             {'name': 'links', 'items': ['Link', 'Unlink']},
+#             {'name': 'tools', 'items': ['Maximize']},
+#         ],
+#         'height': 500,
+#         'width': '100%',
+#     }
+# }
+
+# (опционально) WYSIWYG-редактор. — настраиваем конфигурацию редактора:
+# 🔹 Полный набор (админка)
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
         'height': 300,
         'width': 'auto',
+        'extraPlugins': ','.join([
+            'image2',       # Улучшенный image-плагин
+            'justify',      # Выравнивание
+            'colorbutton',  # Цвет текста и фона
+            'font',         # Шрифты и размеры
+            'widget',       # Виджеты
+            'lineutils',    # Поддержка виджетов
+            'clipboard',    # Поддержка копирования
+        ]),
+        'removePlugins': 'image',
+        'image2_alignClasses': ['img-left', 'img-center', 'img-right'],
+        'image2_captionedClass': 'image-captioned',
+        'image2_disableResizer': False,
+        'stylesSet': 'custom_styles:/static/core/js/ckeditor/styles.js',
+        'contentsCss': ['/static/core/css/global_core.css'],  # SCSS-компилируемый файл
+        'image_prefillDimensions': False,
+        'allowedContent': True,
+    },
+# 🔸 Минимальный набор (пользователь)
+    'user_minimal': {
+        'toolbar': [
+            ['Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor'],
+            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat'],
+            ['Cut', 'Copy', 'Paste', 'Undo', 'Redo'],
+            ['HorizontalRule', 'Smiley'],
+            ['NumberedList', 'BulletedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+
+        ],
+        'height': 200,
+        'width': 'auto',
+        'removePlugins': 'uploadimage,uploadfile,image',
     },
 }
-
 
 # Авторизация
 AUTH_USER_MODEL = 'users.User'  # если кастомная модель
