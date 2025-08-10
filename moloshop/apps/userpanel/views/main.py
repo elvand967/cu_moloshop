@@ -1,5 +1,5 @@
 
-# moloshop/apps/userpanel/views.py
+# moloshop/apps/userpanel/views/main.py
 
 from django.shortcuts import render
 

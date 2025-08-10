@@ -1,7 +1,6 @@
 
 Запуск сервера:
 python manage.py runserver
-
 ---
 
 Создание миграций новых моделей:
@@ -9,7 +8,6 @@ python manage.py makemigrations
 
 Миграции:
 python manage.py migrate
-
 ---
 
 список всех зависимостей в виртуальном окружении:
@@ -17,7 +15,6 @@ python manage.py migrate
 pip freeze > requirements.txt
     установить:
 pip install -r requirements.txt
-
 ---
 
 Меню личного кабинета

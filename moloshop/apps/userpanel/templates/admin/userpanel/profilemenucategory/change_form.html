@@ -1,0 +1,21 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script src="{% static "userpanel/js/url_autofill.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+    {% with named_urls_json=named_urls_json|escapejs %}
+        {{ block.super }}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const urlSelect = document.querySelector('select[name="url"]');
+                if (urlSelect) {
+                    urlSelect.setAttribute('data-named-urls-json', '{{ named_urls_json }}');
+                }
+            });
+        </script>
+    {% endwith %}
+{% endblock %}

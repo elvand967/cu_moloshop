@@ -2,8 +2,19 @@
 # moloshop/apps/userpanel/urls.py
 
 from django.urls import path
-from .views import *
-from .views_service import policy_list, policy_detail
+from .views.main import (
+    main_profile,
+    my_ads,
+    my_orders,
+    purchase_history,
+    test1,
+    test2,
+    test3,
+    test4,
+)
+
+from apps.userpanel.views.views_service import policy_list, policy_detail
+from .views.avatar import generate_avatar_view
 
 app_name = "userpanel" # пространство имён
 
@@ -18,4 +29,6 @@ urlpatterns = [
     path('test4/', test4, name='test4'),
     path('policies/', policy_list, name='policy_list'),
     path('policies/<slug:slug>/', policy_detail, name='policy_detail'),
+
+    path('avatar/default/<int:user_id>/', generate_avatar_view, name='default-avatar'),
 ]

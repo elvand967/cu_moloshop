@@ -58,3 +58,17 @@ def portfolio(request):
         'info': 'Портфолио: новые презентации и разработки',
     }
     return render(request, 'core/portfolio.html', context=data)
+
+
+# --moloshop/apps/core/views.py--
+from django.http import JsonResponse
+from .utils import get_named_url_info
+
+def named_urls_api(request):
+    """
+    API: /core/api/named-urls/
+    Возвращает JSON со всеми именованными маршрутами.
+    """
+    return JsonResponse(get_named_url_info(), safe=False)
+
+

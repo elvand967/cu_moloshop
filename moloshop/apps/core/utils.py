@@ -62,3 +62,58 @@ def list_all_url_names():
     recurse_patterns(resolver.url_patterns)
     sorted_names = sorted(url_names)
     return [(name, name) for name in sorted_names]
+
+
+# ---moloshop/apps/core/utils.py---
+from django.urls import get_resolver
+from django.utils.text import slugify
+import re
+
+def get_named_url_info():
+    """
+    Возвращает список словарей с info по именованным URL:
+    - full_name: 'userpanel:test1'
+    - name: 'test1'
+    - app_name: 'userpanel'
+    - pattern: строка пути (пример: 'test1/')
+    - params: словарь параметров с пустыми значениями, например {'slug': ''}
+    """
+    allowed_namespaces = {'userpanel', 'users', 'core', 'landing'}
+
+    url_info_list = []
+
+    def walk_patterns(patterns, prefix='', app_name=None):
+        for pattern in patterns:
+            if hasattr(pattern, 'url_patterns'):
+                ns = pattern.namespace
+                new_app_name = ns if ns else app_name
+                new_prefix = f"{prefix}{ns}:" if ns else prefix
+                if ns is None or ns in allowed_namespaces:
+                    walk_patterns(pattern.url_patterns, new_prefix, new_app_name)
+            elif pattern.name:
+                full_name = f"{prefix}{pattern.name}"
+                # Пытаемся получить pattern.regex или pattern.pattern
+                pattern_str = ''
+                try:
+                    # Django 2.0+
+                    pattern_str = getattr(pattern.pattern, '_route', '')  # строка маршрута
+                except AttributeError:
+                    pattern_str = ''
+
+                # Ищем параметры в пути, например <slug:slug>
+                param_names = re.findall(r'<(?:\w+:)?(\w+)>', pattern_str)
+                params = {name: '' for name in param_names}
+
+                url_info_list.append({
+                    'full_name': full_name,
+                    'name': pattern.name,
+                    'app_name': app_name or '',
+                    'pattern': pattern_str,
+                    'params': params,
+                })
+
+    resolver = get_resolver()
+    walk_patterns(resolver.url_patterns)
+
+    return url_info_list
+

@@ -60,6 +60,18 @@ class User(UUIDModel, AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []  # можно добавить другие обязательные поля
 
+    '''
+    Методы get_full_name() и get_short_name() — это стандартные методы AbstractUser и AbstractBaseUser, 
+    используемые в Django (например, в админке, при логах, в шаблонах и т.п.).
+    Так как реализована кастомная модель на основе AbstractBaseUser, 
+    необходимо реализовать эти методы вручную, если цель, чтобы admin и другие части Django работали корректно.
+    '''
+    def get_full_name(self):
+        return self.full_name or self.email  # или любое другое предпочтительное поведение
+
+    def get_short_name(self):
+        return self.full_name.split()[0] if self.full_name else self.email
+
     def __str__(self):
         return self.email
 

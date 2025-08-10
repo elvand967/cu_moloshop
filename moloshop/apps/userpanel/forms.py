@@ -1,47 +1,26 @@
 # moloshop/apps/userpanel/forms.py
 
+import json
 from django import forms
-from django.urls import get_resolver, reverse
 from django.core.exceptions import ValidationError
-from django.utils.text import slugify
-from unidecode import unidecode
+from django.urls import reverse
 from .models.menu import ProfileMenuCategory
-
-
-def get_named_url_choices():
-    """
-    Возвращает список именованных URL'ов, отфильтрованных по нужным пространствам имён (namespace).
-    """
-    allowed_namespaces = {
-        'userpanel', 'users', 'users_api', 'core', 'landing',
-    }
-
-    def walk_patterns(patterns, prefix=''):
-        for pattern in patterns:
-            if hasattr(pattern, 'url_patterns'):
-                namespace = f"{prefix}{pattern.namespace}:" if pattern.namespace else prefix
-                if pattern.namespace is None or pattern.namespace in allowed_namespaces:
-                    yield from walk_patterns(pattern.url_patterns, namespace)
-            elif pattern.name:
-                full_name = f"{prefix}{pattern.name}"
-                yield (full_name, full_name)
-
-    return sorted(set(walk_patterns(get_resolver().url_patterns)))
-
+from ..core.utils import get_named_url_info  # универсальная функция, возвращающая список URL
 
 class ProfileMenuCategoryForm(forms.ModelForm):
-    slug = forms.CharField(
-        required=False,
-        label='Slug',
-        help_text="Автоматически создаётся из названия, но может быть изменён вручную.",
-        widget=forms.TextInput()
-    )
-
     url = forms.ChoiceField(
         choices=[],
         required=False,
         label='URL name',
         help_text="Выберите URL-шаблон из подключённых пространств имён"
+    )
+
+    slug = forms.CharField(
+        required=False,
+        label='Slug',
+        help_text="Автоматически создаётся из URL-пути, но может быть изменён вручную."
+                  "! Внимание ! При необходимости передачи параметров корректируй Slug по экземпляру модели",
+        widget=forms.TextInput()
     )
 
     class Meta:
@@ -51,38 +30,49 @@ class ProfileMenuCategoryForm(forms.ModelForm):
             'url_params': forms.Textarea(attrs={
                 'rows': 4,
                 'style': 'resize: vertical; max-height: 200px;',
-                'placeholder': "{'slug': 'example'}"
+                'placeholder': '{"slug": "example"}'
             }),
         }
+
+    class Media:
+        js = ('userpanel/js/url_autofill.js',)  # подключаем JS для автозаполнения
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Собираем список URL-шаблонов с namespace
-        choices = [('', '--- Выберите url_name ---')] + get_named_url_choices()
+        # Получаем список именованных URL с подробной инфой
+        url_info = get_named_url_info()
+
+        # Формируем choices для поля url (выпадающий список)
+        choices = [('', '--- Выберите url_name ---')] + [
+            (item["full_name"], item["full_name"]) for item in url_info
+        ]
         self.fields['url'].choices = choices
 
-        # Добавляем текущий url, если он вручную введён и отсутствует в списке
-        if self.instance.url and self.instance.url not in dict(choices):
-            self.fields['url'].choices.append((self.instance.url, self.instance.url))
+        # Добавляем JSON-данные с полной инфой в атрибут data-named-urls-json у поля 'url'
+        # Django Form API не позволяет напрямую добавить data-атрибут, поэтому меняем widget.attrs
+        self.fields['url'].widget.attrs['data-named-urls-json'] = json.dumps(url_info, ensure_ascii=False)
 
     def clean(self):
         cleaned_data = super().clean()
-        name = cleaned_data.get('name')
-        slug = cleaned_data.get('slug')
-
-        # Генерируем slug, если он не задан
-        if not slug and name:
-            generated_slug = slugify(unidecode(name))
-            cleaned_data['slug'] = generated_slug
-            self.instance.slug = generated_slug
-
-        # Проверка reverse() если установлен is_named_url
         url = cleaned_data.get("url")
+        slug = cleaned_data.get("slug")
         url_params = cleaned_data.get("url_params")
-        if cleaned_data.get("is_named_url") and url:
+        is_named_url = cleaned_data.get("is_named_url")
+
+        # Если slug не указан, но выбран url — используем url (полное имя) в качестве slug по умолчанию
+        if not slug and url:
+            cleaned_data['slug'] = url
+
+        # Проверка reverse() для именованного URL
+        if is_named_url and url:
             try:
-                reverse(url, kwargs=url_params or {})
+                # url_params в форме JSON, передаём в reverse()
+                params = url_params or {}
+                if isinstance(params, str):
+                    import json as js
+                    params = js.loads(params) if params else {}
+                reverse(url, kwargs=params)
             except Exception as e:
                 raise ValidationError(f"reverse('{url}', kwargs={url_params}) не удался: {e}")
 

@@ -113,8 +113,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # База данных (в dev и prod отдельная настройка)
 DATABASES = {}
 
-
-AUTH_USER_MODEL = 'apps.users.User'
+# Авторизация
+AUTH_USER_MODEL = 'users.User'  # если кастомная модель
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -141,7 +141,10 @@ USE_TZ = True
 
 # Статика и медиа
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'assets']
+STATICFILES_DIRS = [
+    BASE_DIR / 'assets',
+    BASE_DIR / 'static',
+]
 STATIC_ROOT = BASE_DIR / 'static_root'
 
 MEDIA_URL = '/media/'
@@ -208,9 +211,6 @@ CKEDITOR_CONFIGS = {
         'removePlugins': 'uploadimage,uploadfile,image',
     },
 }
-
-# Авторизация
-AUTH_USER_MODEL = 'users.User'  # если кастомная модель
 
 # Логирование (пример)
 LOGGING = {

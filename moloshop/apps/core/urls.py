@@ -14,4 +14,6 @@ urlpatterns = [
     path('fag/', fag, name='fag'),
     path('board/', board, name='board'),
     path('showcase/', showcase, name='showcase'),
+
+    path('named-urls-json/', named_urls_api, name='named_urls_json'),
 ]
